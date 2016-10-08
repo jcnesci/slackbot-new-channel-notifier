@@ -1,0 +1,11 @@
+{
+  "name": "soso-slack-new-channel-notifier-bot",
+  "version": "0.0.1",
+  "description": "TBD",
+  "main": "index.js",
+  "author": "info@sosolimited.com",
+  "license": "MIT",
+  "dependencies": {
+    "botkit": "^0.2.2"
+  }
+}
