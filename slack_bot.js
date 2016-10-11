@@ -71,34 +71,46 @@ controller.on('channel_created', function(bot, message) {
 });
 
 // Development testing: direct message the bot and it will answer this.
-controller.hears([''], 'direct_message', function(bot, message) {
+controller.hears(['#(.*)'], 'direct_message', function(bot, message) {
 
-    var channelId = "C03ER7F95";        // ie. #general channel
+    var channelId = "" || message.match[1].substr(0, message.match[1].indexOf('|'));
     var channelName = "";
     var channelPurpose = "";
+
+    console.log("- MESSAGE:");
+    console.log(message);
+    console.log("channelName: " + channelName);
 
     bot.api.channels.info({
         token: process.env.token,
         channel: channelId
     },function(err,response) {
+        if (err) {
+            console.log(err);
+            return;
+        }
+
+        console.log("- channel info RESPONSE:");
+        console.log(response);
+
         channelName = response.channel.name;
         channelPurpose = response.channel.purpose.value;
         reply();
     });
 
     function reply() {
-        console.log("----------");
+        console.log("- REPLY");
         console.log(channelId);
         console.log(channelName);
         console.log(channelPurpose);
 
         bot.reply(message,{
-            text: "Looks like a new channel has been created!",
+            text: "Here's the info on the specified channel",
             username: "FOMO bot",
             icon_emoji: ":robot:",
             attachments: [
                 {
-                    title: "#" + channelName,
+                    title: "#" + channelName + " | ID: " + channelId,
                     text: "Purpose & Topics: " + channelPurpose
                 }
             ]
