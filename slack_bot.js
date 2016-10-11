@@ -38,6 +38,9 @@ controller.on('channel_created', function(bot, message) {
     var channelName = message.channel.name;
     var channelPurpose = 'Purpose not found!';
 
+    // Seems there's a bug in the API which forces us to wait a bit before
+    // making a request for info on the newly created channel.
+    // If we don't wait, the purpose field will be blank even though it shouldn't be.
     setTimeout(_botResponse , 1000);
 
     function _botResponse() {
