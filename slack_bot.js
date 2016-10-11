@@ -31,6 +31,7 @@ var bot = controller.spawn({
 controller.on('channel_created', function(bot, message) {
 
     console.log("------------------- NEW CHANNEL -------------------");
+    console.log("- channel_created MESSAGE:");
     console.log(message);
 
     var channelId = message.channel.id;
@@ -41,12 +42,13 @@ controller.on('channel_created', function(bot, message) {
         token: process.env.token,
         channel: channelId
     },function(err,response) {
-      channelPurpose = response.channel.purpose.value;
-      reply();
+        console.log("- channel info RESPONSE:");
+        channelPurpose = response.channel.purpose.value;
+        reply();
     });
 
     function reply() {
-        console.log("- REPLY");
+        console.log("- bot REPLY");
         console.log(channelId);
         console.log(channelName);
         console.log(channelPurpose);
