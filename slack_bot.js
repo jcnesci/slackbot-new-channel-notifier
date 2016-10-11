@@ -20,7 +20,7 @@ var Botkit = require('botkit');
 var os = require('os');
 
 var controller = Botkit.slackbot({
-    debug: true
+    debug: false
 });
 
 var bot = controller.spawn({
@@ -38,34 +38,40 @@ controller.on('channel_created', function(bot, message) {
     var channelName = message.channel.name;
     var channelPurpose = 'Purpose not found!';
 
-    bot.api.channels.info({
-        token: process.env.token,
-        channel: channelId
-    },function(err,response) {
-        console.log("- channel info RESPONSE:");
-        console.log(response);
-        channelPurpose = response.channel.purpose.value;
-        reply();
-    });
+    setTimeout(_botResponse , 1000);
 
-    function reply() {
-        console.log("- bot REPLY");
-        console.log(channelId);
-        console.log(channelName);
-        console.log(channelPurpose);
+    function _botResponse() {
 
-        bot.say({
-            text: "Looks like a new channel has been created!",
-            username: "FOMO bot",
-            icon_emoji: ":robot:",
-            channel: "general",
-            attachments: [
-                {
-                    title: "#" + channelName,
-                    text: "Purpose & Topics: " + channelPurpose
-                }
-            ]
+        bot.api.channels.info({
+            token: process.env.token,
+            channel: channelId
+        },function(err,response) {
+            console.log("- channel info RESPONSE:");
+            console.log(response);
+            channelPurpose = response.channel.purpose.value;
+            _say();
         });
+
+        function _say() {
+            console.log("- bot REPLY");
+            console.log(channelId);
+            console.log(channelName);
+            console.log(channelPurpose);
+
+            bot.say({
+                text: "Looks like a new channel has been created!",
+                username: "FOMO bot",
+                icon_emoji: ":robot:",
+                channel: "general",
+                attachments: [
+                    {
+                        title: "#" + channelName,
+                        text: "Purpose & Topics: " + channelPurpose
+                    }
+                ]
+            });
+        }
+
     }
 
 });
