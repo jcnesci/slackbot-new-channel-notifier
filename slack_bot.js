@@ -43,6 +43,7 @@ controller.on('channel_created', function(bot, message) {
         channel: channelId
     },function(err,response) {
         console.log("- channel info RESPONSE:");
+        console.log(response);
         channelPurpose = response.channel.purpose.value;
         reply();
     });
