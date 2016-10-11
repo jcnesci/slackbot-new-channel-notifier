@@ -16,6 +16,8 @@ Notifies everyone in Slack's __#general__ channel when a new (public) channel is
 __*NB:*__
 
   - chose port 9111 sort of randomly to try to not disrupt other background process on the server. Hope it works ok.
+  - for testing, you can run the node script without `forever`:
+  	- `PORT=9111 token=YOUR_BOT_API_TOKEN node slack_bot.js`
 
 ### Log files:
 
